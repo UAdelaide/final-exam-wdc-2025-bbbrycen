@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Dog Walking – Totally NOT Overwhelming</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    body { font-family: sans-serif; }
+    #dogCard img { width: 600px; height: 400px; object-fit: cover; }
+    table { border-collapse: collapse; }
+    th, td { border: 1px solid #444; padding: 4px; }
+  </style>
+</head>
+<body>
+
+  <div id="app" style="padding:20px;">
+    <h1 style="margin-bottom:20px;">Dog of the Day</h1>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>Fact #</th>
+          <th>Detail</th>
+          <th>Number</th>
+          <th>Code</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="n in 30" :key="n">
+          <td>{{ n }}</td>
+          <td>Lorem ipsum dolor.</td>
+          <td>{{ Math.random().toFixed(3) }}</td>
+          <td>{{ (Math.random()*1e5).toString(16) }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div id="dogCard" style="margin-top:20px;">
+      <img :src="dog.image" />
+      <p>{{ dog.name }} the {{ dog.breed }} – Age {{ dog.age }}</p>
+    </div>
+  </div>
+
+  <script>
+    const { createApp } = Vue;
+    createApp({
+      data() {
+        return {
+          dog: {
+            name: 'Sir Barks-A-Lot',
+            breed: 'Mystery Mix',
+            age: 4,
+            image: ''
+          }
+        }
+      },
+      methods: {
+        async fetchDogImage() {
+          try {
+            const res = await fetch('https://dog.ceo/api/breeds/image/random');
+            const data = await res.json();
+            this.dog.image = data.message;
+          } catch (e) {
+            console.error('Failed to fetch dog image', e);
+          }
+        }
+      },
+      mounted() {
+        this.fetchDogImage();
+      }
+    }).mount('#app');
+  </script>
+
+</body>
+</html>

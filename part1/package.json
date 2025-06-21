@@ -1,0 +1,14 @@
+{
+  "name": "dog-walk-service",
+  "version": "1.0.0",
+  "description": "Dog walk service API for exam part1",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "debug": "^4.3.4",
+    "express": "^4.18.2",
+    "mysql2": "^3.6.4"
+  }
+} 
